@@ -12,42 +12,86 @@
   </head>
 
   <body>
-    <div class="main-container">
-      <img id="logo" src="img/logo.png" alt="Twittler Logo">
-    <div class="content-container">
+    <div class="main-container"> 
       <header>
-        <img class="self-usericon" src="img/user.png" alt="anonymous user photo">
-        <input id="tweet-msg" name="text" type="text" value="Type to Tweet">
+        <img id="logo" src="img/logo.png" alt="Twittler Logo">
         <button class="user-button">Tweet</button>
-        <button class="user-button">Refresh</button>
+        <button class="user-button">Refresh</button> 
       </header>
-      <div class="newsfeed-container">
-        <div class="newsfeed-tweets">
-          <ul>
-            <li class="username"></li>
-            <li class="tweet-msg"></li>
-            <li class="timestamp"></li>
-          </ul>
-        </div>
-      </div>
-      <aside>
-        <div class="self-userinfo section-container">
-          <img class="self-usericon" src="img/user.png" alt="anonymous user photo">
-          <p id="self-name"></span></p>
-          <p id="self-username"></p>
-        </div>
-        <div class="accountInfo section-container">
-          <p>Tweets</p>
-          <span class="self-numTweets">
-          <p>Following</p>
-          <span class="self-numFollowing"></span>
-        </div>
-        <div class="otheruser-alertbox section-container">
-          <p>Click on a user to see their timeline.</p>
-        </div>
-      </aside>
-    </div> <!-- end content container --> 
-  </div>
+      <div class="content-container">
+        <div class="newsfeed-container">
+          <div class="self-tweet">
+            <img src="img/user.png" alt="anonymous user photo">
+            <input id="tweet-msg" name="text" type="text" value="Type to Tweet">
+            <button class="user-button"><img src="img/bird.svg"</button>
+          </div> <!-- end of self-tweet --> 
+          <hr>
+          <div class="newsfeed-tweets">
+            <div class="tweet">
+              <span class="username">@jewelbots</span>
+              <span class="timestamp">10 minutes ago</span>
+              <span class="content">Is it Friday yet?</span>
+            </div>
+            <div class="tweet">
+              <span class="username">@jewelbots</span>
+              <span class="timestamp">10 minutes ago</span>
+              <span class="content">Is it Friday yet?</span>
+            </div>
+           <div class="tweet">
+              <span class="username">@jewelbots</span>
+              <span class="timestamp">10 minutes ago</span>
+              <span class="content">Is it Friday yet?</span>
+            </div>
+           <div class="tweet">
+              <span class="username">@jewelbots</span>
+              <span class="timestamp">10 minutes ago</span>
+              <span class="content">Is it Friday yet?</span>
+            </div>
+           <div class="tweet">
+              <span class="username">@jewelbots</span>
+              <span class="timestamp">10 minutes ago</span>
+              <span class="content">Is it Friday yet?</span>
+            </div>
+           <div class="tweet">
+              <span class="username">@jewelbots</span>
+              <span class="timestamp">10 minutes ago</span>
+              <span class="content">Is it Friday yet?</span>
+            </div>
+           <div class="tweet">
+              <span class="username">@jewelbots</span>
+              <span class="timestamp">10 minutes ago</span>
+              <span class="content">Is it Friday yet?</span>
+            </div>
+          </div> <!-- end of newsfeed-tweets --> 
+        </div> <!-- end of newsfeed-container --> 
+        <aside>
+          <div class="self-userinfo section-container">
+            <img class="self-usericon" src="img/user.png" alt="anonymous user photo">
+            <div>
+              <p>Name:<span id="name"></span></p>
+              <hr>
+              <p>UserName:<span id="username"></span></p>
+            </div>
+          </div>
+          <div class="self-accountinfo section-container">
+            <p>Tweets:</p>
+            <p>Following:</p> 
+            <div>
+              <span class="self-numTweets">#</span>
+              <span class="self-numFollowing">#</span>
+            </div>
+          </div>
+          <div class="otheruser-alertbox section-container">
+            <img src="img/timeline.png" alt="timeline icon">
+            <p>Click on a username to see the user's tweet feed.</p>
+          </div>
+        </aside>
+      </div> <!-- end content container --> 
+      <footer>
+        <p>Application designed and developed by <a href="https://github.com/msarnicki">msarnicki.</a></p>
+        <p>The developer and this application have no affliation with Twitter.</p>
+      </footer>
+  </div> <!-- end main content container --> 
 
     <script>
       $(document).ready(function(){
