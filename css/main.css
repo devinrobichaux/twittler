@@ -2,8 +2,11 @@
 
 html {
     color: #222;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
     font-size: 1em;
     line-height: 1.4;
+    box-sizing: border-box;
 }
 
 ::-moz-selection {
@@ -51,46 +54,48 @@ textarea {
     padding: 0.2em 0;
 }
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 
 /* ==========================================================================
-   Author's custom styles
+   Page Structure 
    ========================================================================== */
 
 .main-container {
+    min-width:800px; /* change to 100% for fluid width */ 
     width:100%;
     height:100%;
     background: url('../img/mainBG.jpg') 50% 50% no-repeat;
     background-size: 100% 100%;
-    clear:both;
 }
 
 .content-container {
     display: block;
-    width:80%;
+    width:75%;
     margin:20px auto;
+    padding:20px;
     border-radius: 8px;
     border:2px solid #01a6c6;
     background-color: #fff;
-
 }
 
 header {
     display: block;
-    width:100%;
+    width:75%;
+    margin:0 auto;
     height:auto;
-    border-bottom: 1px solid #01a6c6;
 }
 
 aside {
     display: inline-block;
     width:30%;
     height:auto;
-    background-color: yellow;
-    float:left;
 }
 
-.section-container {
-    background-color: pink;
+aside .section-container {
+    min-width:200px;
     width:90%;
     height:150px;
     margin:10px auto;
@@ -99,32 +104,158 @@ aside {
 
 .newsfeed-container {
     display: inline-block;
+    float:right;
     width:70%;
-    height:auto;
-    background-color: purple;
+    height:100%;
 }
 
-#logo {
-    width:35%;
+/* ==========================================================================
+   Typography 
+   ========================================================================== */
+
+.section-container p {
+    font-weight: 200px;
+   }
+
+.self-accountinfo p {
+    display: inline-block;
+    margin:20px;
+    font-size:20px;
+}
+
+.otheruser-alertbox p {
+    margin:10px auto;
+}
+
+footer p {
+    font-size: 12px;
+    margin:5px;
+}
+
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+
+.user-button {
+    display: inline-block;
+    width:100px;
+    height:45px;
+    padding:10px;
+    color:#fff;
+    border:1px solid #fff;
+    border-radius: 5px;
+    background-color: #FF8C00;
+}
+
+header .user-button {
+    float:right;
+    margin:40px 15px;
+}
+
+header #logo {
+    width:40%;
     margin:20px;
     height:auto;
 }
 
-.self-usericon {
+.self-userinfo img {
     display: inline-block;
-    width:10%;
+    width:25%;
+    height:auto;
+    margin:10px;
+    vertical-align: top;
 }
 
+.self-userinfo div {
+    display: inline-block;
+    width:60%;
+}
 
+.self-accountinfo {
+    text-align: center;
+}
 
+.self-accountinfo span {
+    display: inline-block;
+    width:45%;
+}
 
+.otheruser-alertbox {
+    text-align: center;
+    padding:10px;
+}
 
+.otheruser-alertbox img {
+    display: inline-block;
+    width:50px;   
+    margin:10px;
+}
 
+.self-tweet {
+    margin:20px;
+}
 
+.self-tweet img {
+    display:inline-block;
+    width:8%;
+    height:auto;
+    margin:5px;
+}
 
+.self-tweet input {
+    display: inline-block;
+    width:50%;
+    height:50px;
+    padding-left: 10px;
+    border-radius: 5px;
+}
 
+.self-tweet .user-button {
+    background-color: #fff;
+    display: inline-block;
+    height:50px;
+    margin-left: 10px;
+    border:1px solid #FF8C00;
+}
 
+.self-tweet .user-button img {
+    display: inline-block;
+    width:50%;
+    height:auto;
+    margin:auto;
+}
 
+.newsfeed-tweets span {
+    display: inline-block;
+    list-style: none;
+    font-style: italic;
+}
+
+.tweet {
+    margin:10px;
+}
+
+.tweet:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+.tweet .username {
+    font-weight: bold;
+}
+
+.tweet .timestamp {
+    font-size: 15px;
+    float:right;
+}
+
+.tweet .content {
+    display: block;
+}
+
+footer {
+    text-align: center;
+}
 
 
 
