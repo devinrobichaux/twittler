@@ -15,54 +15,20 @@
     <div class="main-container"> 
       <header>
         <img id="logo" src="img/logo.png" alt="Twittler Logo">
-        <button class="user-button">Tweet</button>
-        <button class="user-button">Refresh</button> 
+        <button class="user-button refreshPage-btn"><img src="img/bird.svg"</button>
+        <button class="user-button refreshFeed-btn">Refresh</button> 
       </header>
       <div class="content-container">
         <div class="newsfeed-container">
           <div class="self-tweet">
             <img src="img/user.png" alt="anonymous user photo">
-            <input id="tweet-msg" name="text" type="text" value="Type to Tweet">
-            <button class="user-button"><img src="img/bird.svg"</button>
+            <input id="tweet-msg" name="text" type="text" placeholder="Type to Tweet">
+            <button class="user-button tweet-btn">Tweet</button>
           </div> <!-- end of self-tweet --> 
           <hr>
           <div class="newsfeed-tweets">
             <div class="tweet">
-              <span class="username">@jewelbots</span>
-              <span class="timestamp">10 minutes ago</span>
-              <span class="content">Is it Friday yet?</span>
-            </div>
-            <div class="tweet">
-              <span class="username">@jewelbots</span>
-              <span class="timestamp">10 minutes ago</span>
-              <span class="content">Is it Friday yet?</span>
-            </div>
-           <div class="tweet">
-              <span class="username">@jewelbots</span>
-              <span class="timestamp">10 minutes ago</span>
-              <span class="content">Is it Friday yet?</span>
-            </div>
-           <div class="tweet">
-              <span class="username">@jewelbots</span>
-              <span class="timestamp">10 minutes ago</span>
-              <span class="content">Is it Friday yet?</span>
-            </div>
-           <div class="tweet">
-              <span class="username">@jewelbots</span>
-              <span class="timestamp">10 minutes ago</span>
-              <span class="content">Is it Friday yet?</span>
-            </div>
-           <div class="tweet">
-              <span class="username">@jewelbots</span>
-              <span class="timestamp">10 minutes ago</span>
-              <span class="content">Is it Friday yet?</span>
-            </div>
-           <div class="tweet">
-              <span class="username">@jewelbots</span>
-              <span class="timestamp">10 minutes ago</span>
-              <span class="content">Is it Friday yet?</span>
-            </div>
-          </div> <!-- end of newsfeed-tweets --> 
+            </div></div> <!-- end of newsfeed-tweets --> 
         </div> <!-- end of newsfeed-container --> 
         <aside>
           <div class="self-userinfo section-container">
@@ -75,11 +41,7 @@
           </div>
           <div class="self-accountinfo section-container">
             <p>Tweets:</p>
-            <p>Following:</p> 
-            <div>
-              <span class="self-numTweets">#</span>
-              <span class="self-numFollowing">#</span>
-            </div>
+              <span class="self-numTweets">0</span>
           </div>
           <div class="otheruser-alertbox section-container">
             <img src="img/timeline.png" alt="timeline icon">
@@ -93,24 +55,56 @@
       </footer>
   </div> <!-- end main content container --> 
 
-    <script>
-      $(document).ready(function(){
-        var $body = $('body');
-       /* $body.html(''); */
-
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
-      });
-
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
 
+    <script>
+
+      $(document).ready(function(){ 
+        var $body = $('body'),
+            $newsfeed = $('.newsfeed-tweets')
+         
+        displayTweets(streams.home);
+
+        // click refresh button to display new tweets
+        $('.refreshFeed-btn').on('click', function(e) {
+          e.preventDefault();
+          $newsfeed.text('');
+          displayTweets(streams.home);
+        });
+        
+        // click on user to display user's timeline
+        $('.tweet').on('click', 'a.username', function(e) {
+          e.preventDefault();
+          $newsfeed.text(''); 
+
+          var $that = $(this).text().slice(1,-2), 
+              timeline = streams.home.filter(function(obj) {
+                return obj.user === $that; 
+              });
+
+          displayTweets(timeline);
+       });
+
+
+       // display tweets on newsfeed 
+        function displayTweets(tweetArr) {
+          var index = tweetArr.length - 1;
+          while(index >= 0){
+            var tweet = tweetArr[index],
+                $tweet = $('<div></div>').addClass('tweet'),
+                $user = $('<a href="#" class="username"></a>').text('@' + tweet.user + ': '),
+                $timeStamp = $('<span class="timestamp"></span>').text(tweet.created_at),
+                $message = $('<span class="content"></span>').text(tweet.message); 
+
+            $tweet.append($user, $timeStamp, $message).appendTo($newsfeed);
+            index -= 1;
+          }
+        };
+    });
     </script>
   </body>
 </html>
+
+
+
