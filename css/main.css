@@ -117,6 +117,7 @@ aside .section-container {
     text-decoration: none;
     color:#8899a6;
     font-style: italic;
+    padding-right:10px;
 }
 
 .section-container p {
