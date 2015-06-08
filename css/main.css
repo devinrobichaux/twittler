@@ -64,7 +64,7 @@ textarea {
    ========================================================================== */
 
 .main-container {
-    min-width:800px; /* change to 100% for fluid width */ 
+    min-width:950px; /* change to 100% for fluid width */ 
     width:100%;
     height:100%;
     background: url('../img/mainBG.jpg') 50% 50% no-repeat;
@@ -113,6 +113,12 @@ aside .section-container {
    Typography 
    ========================================================================== */
 
+.username, .timestamp {
+    text-decoration: none;
+    color:#8899a6;
+    font-style: italic;
+}
+
 .section-container p {
     font-weight: 200px;
    }
@@ -148,6 +154,21 @@ footer p {
     background-color: #FF8C00;
 }
 
+.refreshPage-btn {
+    background-color: #fff;
+    display: inline-block;
+    height:45px;
+    margin-left: 10px;
+    border:1px solid #FF8C00;
+}
+
+.refreshPage-btn img {
+    display: inline-block;
+    width:45%;
+    height:auto;
+    margin:auto;
+}
+
 header .user-button {
     float:right;
     margin:40px 15px;
@@ -172,14 +193,21 @@ header #logo {
     width:60%;
 }
 
+.self-userinfo p {
+    font-weight: bold;
+}
+
+.self-userinfo #name ,
+.self-userinfo #username {
+    display: block;
+    margin:0 auto;
+    font-weight: normal;
+}
+
 .self-accountinfo {
     text-align: center;
 }
 
-.self-accountinfo span {
-    display: inline-block;
-    width:45%;
-}
 
 .otheruser-alertbox {
     text-align: center;
@@ -211,41 +239,23 @@ header #logo {
     border-radius: 5px;
 }
 
-.self-tweet .user-button {
-    background-color: #fff;
-    display: inline-block;
-    height:50px;
-    margin-left: 10px;
-    border:1px solid #FF8C00;
-}
-
-.self-tweet .user-button img {
-    display: inline-block;
-    width:50%;
-    height:auto;
-    margin:auto;
-}
-
-.newsfeed-tweets span {
-    display: inline-block;
-    list-style: none;
-    font-style: italic;
+.newsfeed-tweets {
+    max-height: 375px;
+    min-width:425px;
+    overflow: auto;
 }
 
 .tweet {
     margin:10px;
+    padding:5px;
 }
 
 .tweet:nth-child(even) {
     background-color: #f8f8f8;
 }
 
-.tweet .username {
-    font-weight: bold;
-}
-
 .tweet .timestamp {
-    font-size: 15px;
+    font-size: 12px;
     float:right;
 }
 
