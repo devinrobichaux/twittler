@@ -65,6 +65,7 @@ textarea {
 
 .main-container {
     min-width:950px; /* change to 100% for fluid width */ 
+    min-height:780px;
     width:100%;
     height:100%;
     background: url('../img/mainBG.jpg') 50% 50% no-repeat;
@@ -73,7 +74,8 @@ textarea {
 
 .content-container {
     display: block;
-    width:75%;
+    min-width: 900px;
+    width:80%;
     margin:20px auto;
     padding:20px;
     border-radius: 8px;
@@ -170,6 +172,11 @@ footer p {
     margin:auto;
 }
 
+.refreshFeed-btn {
+    padding:0;
+    font-size: 14px;
+}
+
 header .user-button {
     float:right;
     margin:40px 15px;
@@ -177,7 +184,7 @@ header .user-button {
 
 header #logo {
     width:40%;
-    margin:20px;
+    margin:20px 20px 20px 0;
     height:auto;
 }
 
@@ -198,17 +205,31 @@ header #logo {
     font-weight: bold;
 }
 
-.self-userinfo #name ,
-.self-userinfo #username {
+#name,
+#username,
+#bio {
     display: block;
     margin:0 auto;
     font-weight: normal;
 }
 
+#bio {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top:10px;
+    padding: 10px auto 0 auto;
+}
+
 .self-accountinfo {
+    display: block;
     text-align: center;
 }
 
+.self-accountinfo p:nth-child(2) {
+    margin: 5px;
+    padding-left: 10px;
+    font-size: 14px;
+}
 
 .otheruser-alertbox {
     text-align: center;
@@ -261,7 +282,7 @@ header #logo {
     float:right;
 }
 
-.tweet .content {
+.tweet .message {
     display: block;
 }
 
