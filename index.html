@@ -16,7 +16,6 @@
       <header>
         <img id="logo" src="img/logo.png" alt="Twittler Logo">
         <button class="user-button refreshPage-btn"><img src="img/bird.svg"</button>
-        <button class="user-button refreshFeed-btn">Refresh</button> 
       </header>
       <div class="content-container">
         <div class="newsfeed-container">
@@ -24,24 +23,24 @@
             <img src="img/user.png" alt="anonymous user photo">
             <input id="tweet-msg" name="text" type="text" placeholder="Type to Tweet">
             <button class="user-button tweet-btn">Tweet</button>
+            <button class="user-button refreshFeed-btn">Refresh Feed</button> 
           </div> <!-- end of self-tweet --> 
           <hr>
           <div class="newsfeed-tweets">
-            <div class="tweet"></div>
           </div> <!-- end of newsfeed-tweets --> 
         </div> <!-- end of newsfeed-container --> 
         <aside>
           <div class="self-userinfo section-container">
             <img class="self-usericon" src="img/user.png" alt="anonymous user photo">
             <div>
-              <p>Name:<span id="name"></span></p>
+              <p>Name:<span id="name">Anon Ymous</span></p>
               <hr>
-              <p>UserName:<span id="username"></span></p>
+              <p>UserName:<span id="username">anonymous</span></p>
             </div>
           </div>
           <div class="self-accountinfo section-container">
-            <p>Tweets:</p>
-              <span class="self-numTweets">0</span>
+            <p id="bio">User Bio:</p>
+            <p>Amateur music evangelist. Introvert. Coffee ninja. Web aficionado. Hipster-friendly food specialist.</p>
           </div>
           <div class="otheruser-alertbox section-container">
             <img src="img/timeline.png" alt="timeline icon">
@@ -57,54 +56,77 @@
 
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <script src="timesince.js"></script>
 
     <script>
+      var visitor = "anonymous";
+      streams.users.anonymous = [];
     
       $(document).ready(function(){ 
+        //initialize variables 
         var $body = $('body'),
-            $newsfeed = $('.newsfeed-tweets');
-         
+            $newsfeed = $('.newsfeed-tweets'),
+            $streams = streams.home.length;
+
         displayTweets(streams.home);
 
         // click refresh button to display new tweets
-        $('.refreshFeed-btn').on('click', function(e) {
-          e.preventDefault();
-          $newsfeed.text('');
-          displayTweets(streams.home);
+        $('.refreshFeed-btn').on('click', function() {
+          // displays only the latest tweets in the stream
+          displayTweets(streams.home.slice($streams));
+          $streams = streams.home.length; 
+          updateTime();
         });
         
         // click on user to display user's timeline
-        $('.tweet').on('click', 'a.username', function(e) {
-          e.preventDefault();
+        $newsfeed.on('click', 'a.username', function(e) {
+          e.preventDefault(); 
           $newsfeed.text(''); 
-
+          // set $that equal to the username clicked on 
           var $that = $(this).text().slice(1,-2);
 
           var timeline = streams.home.filter(function(obj) {
                 return obj.user === $that; 
             });
-
           displayTweets(timeline);
        });
+
+      var updateTime = function() {
+          $('div.tweet').each(function() {
+          var $this = $(this),
+              $date = $this.attr('data-createdAt'), 
+              timeAgo = timeSince(new Date($date));
+           
+              if ($this.children('span.timestamp').length === 0) {
+                $('<span class="timestamp"></span>').prependTo($this);
+              }
+              $this.children('span.timestamp').text(timeAgo); 
+            });
+          };  
+
+        updateTime();
+        setInterval(updateTime, 30000);
 
         //user tweet functionality 
         $('.tweet-btn').on('click', function(e) {
           e.preventDefault(); 
-          var message = $('#tweet-msg').text(); 
+          var message = $('#tweet-msg').val(); 
           writeTweet(message); 
+          // appends user's tweet to the newsfeed, but also displays previous tweets 
+          displayTweets(streams.users.anonymous);
         });
 
-       // display tweets on newsfeed 
+        // display tweets on newsfeed 
         function displayTweets(tweetArr) {
-          var index = tweetArr.length - 1;
+          var index = tweetArr.length - 1,
+               timeCreated = new Date(); 
           while(index >= 0){
             var tweet = tweetArr[index],
-                $tweet = $('<div></div>').addClass('tweet'),
+                $tweet = $('<div></div>').addClass('tweet').attr('data-createdAt', timeCreated),
                 $user = $('<a href="#" class="username"></a>').text('@' + tweet.user + ': '),
-                $timeStamp = $('<span class="timestamp"></span>').text(tweet.created_at),
-                $message = $('<span class="content"></span>').text(tweet.message); 
+                $message = $('<span class="message"></span>').text(tweet.message); 
 
-            $tweet.append($user, $timeStamp, $message).appendTo($newsfeed);
+            $tweet.prepend($user, $message).prependTo($newsfeed);
             index -= 1;
           }
         };
