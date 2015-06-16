@@ -57,22 +57,55 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <script src="timesince.js"></script>
+    <script src="underscore.js"></script>
 
     <script>
       var visitor = "anonymous";
       streams.users.anonymous = [];
     
       $(document).ready(function(){ 
-        //initialize variables 
-        var $body = $('body'),
-            $newsfeed = $('.newsfeed-tweets'),
-            $streams = streams.home.length;
+
+        var $body = $('body');
+        var $newsfeed = $('.newsfeed-tweets');
+        var $streams = streams.home.length;
+
+        // display tweets on newsfeed 
+        var displayTweets = function(tweetArr) {
+          var index = tweetArr.length - 1;
+          var timeCreated = new Date(); 
+
+          while(index >= 0){
+            var tweet = tweetArr[index];
+            var $tweet = $('<div></div>').addClass('tweet').attr('data-createdAt', timeCreated);
+            var $user = $('<a href="#" class="username"></a>').text('@' + tweet.user + ': ');
+            var $message = $('<span class="message"></span>').text(tweet.message); 
+
+            $tweet.prepend($user, $message).prependTo($newsfeed);
+            index -= 1;
+          }
+        };
 
         displayTweets(streams.home);
 
+        var updateTime = function() {
+          $('div.tweet').each(function() {
+            var $this = $(this);
+            var $date = $this.attr('data-createdAt');
+            var timeAgo = timeSince(new Date($date));
+             
+            if ($this.children('span.timestamp').length === 0) {
+              $('<span class="timestamp"></span>').prependTo($this);
+            }
+            $this.children('span.timestamp').text(timeAgo); 
+          });
+        };  
+
+        updateTime();
+        setInterval(updateTime, 30000);
+
         // click refresh button to display new tweets
         $('.refreshFeed-btn').on('click', function() {
-          // displays only the latest tweets in the stream
+          // displays the latest tweets in the stream
           displayTweets(streams.home.slice($streams));
           $streams = streams.home.length; 
           updateTime();
@@ -84,53 +117,22 @@
           $newsfeed.text(''); 
           // set $that equal to the username clicked on 
           var $that = $(this).text().slice(1,-2);
-
           var timeline = streams.home.filter(function(obj) {
-                return obj.user === $that; 
-            });
+            return obj.user === $that; 
+          });
           displayTweets(timeline);
        });
-
-      var updateTime = function() {
-          $('div.tweet').each(function() {
-          var $this = $(this),
-              $date = $this.attr('data-createdAt'), 
-              timeAgo = timeSince(new Date($date));
-           
-              if ($this.children('span.timestamp').length === 0) {
-                $('<span class="timestamp"></span>').prependTo($this);
-              }
-              $this.children('span.timestamp').text(timeAgo); 
-            });
-          };  
-
-        updateTime();
-        setInterval(updateTime, 30000);
 
         //user tweet functionality 
         $('.tweet-btn').on('click', function(e) {
           e.preventDefault(); 
           var message = $('#tweet-msg').val(); 
+
           writeTweet(message); 
           // appends user's tweet to the newsfeed, but also displays previous tweets 
           displayTweets(streams.users.anonymous);
         });
-
-        // display tweets on newsfeed 
-        function displayTweets(tweetArr) {
-          var index = tweetArr.length - 1,
-               timeCreated = new Date(); 
-          while(index >= 0){
-            var tweet = tweetArr[index],
-                $tweet = $('<div></div>').addClass('tweet').attr('data-createdAt', timeCreated),
-                $user = $('<a href="#" class="username"></a>').text('@' + tweet.user + ': '),
-                $message = $('<span class="message"></span>').text(tweet.message); 
-
-            $tweet.prepend($user, $message).prependTo($newsfeed);
-            index -= 1;
-          }
-        };
-    });
+      });
     </script>
   </body>
 </html>
